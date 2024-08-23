@@ -38,7 +38,7 @@
 
 								<scrollbar id="inventory-scroll" nav-pos="0 3" spriteset="angular-scrollbar" bar-offset="1 0" width="217" height="81" anchor="0 0" offset="0 1" escape-down="false" >
 									<!-- <equipmentinventory id="equipment-inventory" flow="hboxwrapped" width="216" height="81" anchor="0 0" offset="0 0" visible="true" /> -->
-									<tradingequipmentinventory id="equipment-inventory" flow="hboxwrapped" width="216" height="81" anchor="0 0" offset="0 0" visible="true" />
+									<tradingequipmentinventory id="equipment-inventory" width="216" height="81" anchor="0 0" offset="0 0" visible="true" />
 								</scrollbar>
 						</group>
 					</group>
