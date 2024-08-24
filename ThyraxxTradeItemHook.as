@@ -3,25 +3,39 @@ namespace itemtrading
 	TradingWindow@ m_tradingWindow;
 
 	[Hook]
-	void GameModeStart(AGameplayGameMode@ aGameplayGameMode, SValue@ save) {
+	void GameModeStart(AGameplayGameMode@ aGameplayGameMode, SValue@ save) 
+	{
 		print("We are here--");
-		aGameplayGameMode.m_userWindows.insertLast(@m_tradingWindow = TradingWindow(aGameplayGameMode.m_guiBuilder));
+		@m_tradingWindow = TradingWindow(aGameplayGameMode.m_guiBuilder);
 	}
 
+	[Hook]
+	void PickedCharacter(PlayerRecord@ record)
+	{
+		m_tradingWindow.m_equipmentWidget.SetOwner(record);
+		m_tradingWindow.m_equipmentInventoryWidget.SetOwner(record);
+	}
 
 	[Hook]
-	void GameModeUpdate(BaseGameMode@ baseGameMode, int ms, GameInput& gameInput, MenuInput& menuInput) {
+	void GameModeUpdate(BaseGameMode@ baseGameMode, int ms, GameInput& gameInput, MenuInput& menuInput) 
+	{
 		if(m_tradingWindow is null)
 			return;
 
-		if(Platform::GetKeyState(58).Pressed){
+		if(Platform::GetKeyState(58).Pressed)
+		{
 			print("trading window activated");
-			baseGameMode.ToggleUserWindow(m_tradingWindow);
+			
+			if(cast<TradingWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null)
+				baseGameMode.m_windowManager.AddWindowObject(m_tradingWindow);
+			else
+				baseGameMode.m_windowManager.CloseWindow(m_tradingWindow);
 		}
 	}
 
 	[Hook]
-	void LoadWidgetProducers(GUIBuilder@ builder) {
+	void LoadWidgetProducers(GUIBuilder@ builder) 
+	{
 		builder.AddWidgetProducer("tradingequipmentinventory", LoadTradingEquipmentInventoryWidget);
 		builder.AddWidgetProducer("tradingequipmentitem", LoadTradingEquipmentInventoryWidget);
 	}
