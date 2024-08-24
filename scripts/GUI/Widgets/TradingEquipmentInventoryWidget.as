@@ -20,6 +20,11 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 	//		m_owner.equipInventory.m_isDirty = false;
 	//	}
 	//}
+	void OnClick(Equipment::Equipment@ item)
+	{
+		EquipmentInventoryWidget::OnClick(item);
+		print("onclick " + item.GetName());
+	}
 
 	void DoLayout(vec2 origin, vec2 parentSz) override
 	{
