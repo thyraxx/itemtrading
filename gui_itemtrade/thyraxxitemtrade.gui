@@ -11,8 +11,10 @@
 
 	<doc>
 		<group>
-			<!-- Inventory -->
-				<group anchor="0.5 0" width="233" height="105" offset="0 25" flow="vbox" >
+
+			<group flow="hbox">
+			<!-- Your offer -->
+				<group anchor="0.2 0" width="150" height="105" offset="0 35" flow="vbox" >
 
 					<!-- Title -->
 					<panel width="150" height="18" anchor="0.5 0" style="standard_bridge" >
@@ -20,29 +22,87 @@
 					</panel>
 
 					<!-- Content -->
-					<group anchor="0.5 0" width="235" height="85" offset="0 2" >
+					<group anchor="0.5 0" width="80" height="85" offset="0 2" >
 
 						<!-- Grid -->
 						<equipmentitem id="equipment-item-template" offset="0 0" width="27" height="27" anchor="0 0" background-src="inventory-slot" hover-src="inventory-slot-hover" visible="false" type="inventory" />
 
-						<!-- <group width="229" height="83" anchor="0.5 0" offset="0 0" >
-							<rect width="233" height="87" anchor="1 0" offset="1 -2" spriteset="gui/sprite_rect.sval:square-rl" />
+						<group width="96" height="83" anchor="0.5 0" offset="0 0" >
+							<rect width="96" height="87" anchor="1 0" offset="-2 -2" spriteset="gui/sprite_rect.sval:square-rl" />
 
-								<scrollbar id="inventory-scroll" nav-pos="0 3" spriteset="angular-scrollbar" bar-offset="1 0" width="217" height="81" anchor="0 0" offset="0 1" escape-down="false" >
-									<tradingequipmentinventory id="equipment-inventory" flow="hboxwrapped" width="216" height="81" anchor="0 0" offset="0 0" visible="true" />
-								</scrollbar>
-						</group> -->
-
-						<group width="229" height="83" anchor="0.5 0" offset="0 0" >
-							<rect width="233" height="87" anchor="1 0" offset="1 -2" spriteset="gui/sprite_rect.sval:square-rl" />
-
-								<scrollbar id="inventory-scroll" nav-pos="0 3" spriteset="angular-scrollbar" bar-offset="1 0" width="217" height="81" anchor="0 0" offset="0 1" escape-down="false" >
+								<scrollbar id="inventory-scroll" nav-pos="0 3" spriteset="angular-scrollbar" bar-offset="1 0" width="81" height="81" anchor="0 0" offset="0 1" escape-down="false" >
 									<!-- <equipmentinventory id="equipment-inventory" flow="hboxwrapped" width="216" height="81" anchor="0 0" offset="0 0" visible="true" /> -->
-									<tradingequipmentinventory id="equipment-inventory" width="216" height="81" anchor="0 0" offset="0 0" visible="true" />
+									<tradingequipmentinventory id="equipment-inventory" width="83" flow="hboxwrapped" height="81" anchor="0 0" offset="0 0" visible="true" />
 								</scrollbar>
 						</group>
 					</group>
 				</group>
+
+				<!-- Their offer -->
+				<group anchor="0.2 0" width="150" height="105" offset="0 35" flow="vbox" >
+
+					<!-- Title -->
+					<panel width="150" height="18" anchor="0.5 0" style="standard_bridge" >
+						<text anchor="0.5 0.5" offset="0 -1" text="Their offer" font="header" />
+					</panel>
+
+					<!-- Content -->
+					<group anchor="0.5 0" width="80" height="85" offset="0 2" >
+
+						<!-- Grid -->
+						<equipmentitem id="equipment-item-template" offset="0 0" width="27" height="27" anchor="0 0" background-src="inventory-slot" hover-src="inventory-slot-hover" visible="false" type="inventory" />
+
+						<group width="96" height="83" anchor="0.5 0" offset="0 0" >
+							<rect width="96" height="87" anchor="1 0" offset="-2 -2" spriteset="gui/sprite_rect.sval:square-rl" />
+
+								<scrollbar id="inventory-scroll" nav-pos="0 3" spriteset="angular-scrollbar" bar-offset="1 0" width="81" height="81" anchor="0 0" offset="0 1" escape-down="false" >
+									<!-- <equipmentinventory id="equipment-inventory" flow="hboxwrapped" width="216" height="81" anchor="0 0" offset="0 0" visible="true" /> -->
+									<tradingequipmentinventory id="equipment-inventory" width="83" flow="hboxwrapped" height="81" anchor="0 0" offset="0 0" visible="true" />
+								</scrollbar>
+						</group>
+					</group>
+				</group>
+			</group>
+
+			<group offset="200 200" flow="hboxwrapped">
+				<!-- Buttons -->
+				<!-- offset not right? -->
+				<scalebutton id="tradelock" spriteset="scalebutton-regular" width="60" height="18" offset="0 0" anchor="0 0" func="tradelock" font="gui/fonts/arial11.fnt" text="Lock in" />
+				<scalebutton id="tradeconfirm" spriteset="scalebutton-regular" width="60" height="18" offset="60 0" anchor="0 0" func="tradeconfirm" font="gui/fonts/arial11.fnt" text="Confirm" />
+			</group>
+
+			<!-- Inventory -->
+			<group anchor="0.5 0" width="233" height="105" offset="0 240" flow="vbox" >
+
+				<!-- Title -->
+				<panel width="150" height="18" anchor="0.5 0" style="standard_bridge" >
+					<text anchor="0.5 0.5" offset="0 -1" text="Inventory" font="header" />
+				</panel>
+
+				<!-- Content -->
+				<group anchor="0.5 0" width="235" height="85" offset="0 2" >
+
+					<!-- Grid -->
+					<equipmentitem id="equipment-item-template" offset="0 0" width="27" height="27" anchor="0 0" background-src="inventory-slot" hover-src="inventory-slot-hover" visible="false" type="inventory" />
+
+					<!-- <group width="229" height="83" anchor="0.5 0" offset="0 0" >
+						<rect width="233" height="87" anchor="1 0" offset="1 -2" spriteset="gui/sprite_rect.sval:square-rl" />
+
+							<scrollbar id="inventory-scroll" nav-pos="0 3" spriteset="angular-scrollbar" bar-offset="1 0" width="217" height="81" anchor="0 0" offset="0 1" escape-down="false" >
+								<tradingequipmentinventory id="equipment-inventory" flow="hboxwrapped" width="216" height="81" anchor="0 0" offset="0 0" visible="true" />
+							</scrollbar>
+					</group> -->
+
+					<group width="229" height="83" anchor="0.5 0" offset="0 0" >
+						<rect width="233" height="87" anchor="1 0" offset="1 -2" spriteset="gui/sprite_rect.sval:square-rl" />
+
+							<scrollbar id="inventory-scroll" nav-pos="0 3" spriteset="angular-scrollbar" bar-offset="1 0" width="217" height="81" anchor="0 0" offset="0 1" escape-down="false" >
+								<!-- <equipmentinventory id="equipment-inventory" flow="hboxwrapped" width="216" height="81" anchor="0 0" offset="0 0" visible="true" /> -->
+								<tradingequipmentinventory id="equipment-inventory" width="216" height="81" anchor="0 0" offset="0 0" visible="true" />
+							</scrollbar>
+					</group>
+				</group>
+			</group>
 		</group>
 	</doc>
 </gui>
