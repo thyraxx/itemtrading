@@ -1,14 +1,18 @@
 namespace PlayerHandler
 {
-	void SyncItemTradeWindow(uint8 peer) {
+	void SendCancelTradeMessage() {
 		
 	}
 
-	void SendTradeLockMessage(uint8 peer, bool lockin) {
+	void SyncItemsInTradeWindow(uint8 peer) { // equipment item parameter?
+		
+	}
+
+	void SendTradeLockMessage(uint8 peer, bool isLocked) {
 
 	}
 
-	void SendTradeConfirmMessage(uint8 peer) {
+	void SendTradeConfirmMessage(uint8 peer, bool isConfirmed) {
 
 	}
 }
