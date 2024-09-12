@@ -6,7 +6,7 @@ class TradingEquipmentItemWidget : EquipmentItemWidget
 
 	void ClickDown(bool usingMouse, vec2 mousePos) override 
 	{
-		EquipmentItemWidget::ClickDown(usingMouse, mousePos);
+		//EquipmentItemWidget::ClickDown(usingMouse, mousePos);
 		print("click down");
 	}
 }
