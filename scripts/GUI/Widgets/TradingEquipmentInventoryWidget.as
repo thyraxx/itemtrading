@@ -1,16 +1,16 @@
 class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 {
-	EquipmentItemWidget@ m_tradingItemTemplate;
-	EquipmentInventory@ m_equipmentInventory;
+	TradingEquipmentItemWidget@ m_tradingItemTemplate;
+	//EquipmentInventory@ m_equipmentInventory;
 
-	Widget@ m_widget;
+	//Widget@ m_widget;
 
 	TradingEquipmentInventoryWidget() {
+		//@m_itemTemplate = cast<EquipmentItemWidget>(m_window.m_widget.GetWidgetById("equipment-item-template"));
 		super();
 
-		@m_tradingItemTemplate = cast<EquipmentItemWidget>(m_widget.GetWidgetById("equipment-item-template"));
-		@m_equipmentInventory = EquipmentInventory(GetLocalPlayerRecord());
-		m_equipmentInventory.m_maxItems = 9;
+		//@m_equipmentInventory = EquipmentInventory(GetLocalPlayerRecord());
+		//m_equipmentInventory.m_maxItems = 9;
 		//@m_owner = GetLocalPlayerRecord();
 
 
@@ -18,7 +18,7 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
    		//@m_equipmentInventoryWidget.m_itemTemplate = cast<TradingEquipmentItemWidget>(m_widget.GetWidgetById("equipment-item-template-offer"));
 	}
 
-	void OnClick(Equipment::Equipment@ item)
+	void OnClick(Equipment::Equipment@ item) override
 	{
 
 		//EquipmentInventoryWidget::OnClick(item);
@@ -29,9 +29,10 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 		print("onclick " + item.GetName());
 
 
-		auto equip = cast<Equipment::Equipment>(item);
-		if (equip !is null)
-			m_equipmentInventory.Add(item);
+		//auto equip = cast<Equipment::Equipment>(item);
+		//if (equip !is null)
+		//	m_owner.equipInventory.Add(item);
+		
 		//if (!m_owner.equipInventory.Remove(item))
 		//	return;
 
@@ -39,8 +40,8 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 
 	void DoLayout(vec2 origin, vec2 parentSz) override
 	{
-		//if(m_owner is null)
-		//	@m_owner = GetLocalPlayerRecord();
+		if(m_owner is null)
+			@m_owner = GetLocalPlayerRecord();
 
 		EquipmentInventoryWidget::DoLayout(origin, parentSz);
 
@@ -49,7 +50,7 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 ////
 		//for (uint i = 0; i < m_children.length(); i++)
 		//{
-		//	auto child = cast<EquipmentItemWidget>(m_children[i]);
+		//	auto child = cast<TradingEquipmentItemWidget>(m_children[i]);
 		//	if (child is null)
 		//		continue;
 		//	
@@ -59,7 +60,6 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 		//	else
 		//		child.m_color = vec4(1.0f);
 		//}
-////
 		//RectWidget::DoLayout(origin, parentSz);
 	}
 
@@ -68,45 +68,45 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 	{
 		EquipmentInventoryWidget::Refresh();
 
-		ClearChildren();
-
-		vec2 baseSize = vec2(m_width / m_tradingItemTemplate.m_width, int(ceil(m_height / float(m_tradingItemTemplate.m_height))));
-
-		vec2 offset = vec2(0);
-		ivec2 navOffset = ivec2(0);
-
-		for (uint i = 0; i < uint(max(m_equipmentInventory.m_items.length(), baseSize.x * baseSize.y)); i++)
-		{
-			auto item = cast<EquipmentItemWidget>(m_tradingItemTemplate.Clone());
-
-			item.SetID("");
-			item.m_offset = offset;
-			if (i < m_equipmentInventory.m_items.length())
-				item.Set(m_equipmentInventory.m_items[i], this);
-
-			item.m_visible = true;
-			item.m_navPos += navOffset;
-			@item.m_inventory = this;
-
-			AddChild(item);
-
-			navOffset.x += 1;
-
-			offset.x += item.m_width;
-			if ((offset.x + item.m_width) > m_width)
-			{
-				offset.x = 0;
-				offset.y += item.m_height;
-
-				navOffset.x = 0;
-				navOffset.y += 1;
-
-				if (m_equipmentInventory.m_items.length() / baseSize.x > baseSize.y)
-					baseSize.y++;
-			}
-		}
-
-		m_height = navOffset.y * m_tradingItemTemplate.m_height;
+		//ClearChildren();
+//
+		//vec2 baseSize = vec2(m_width / m_itemTemplate.m_width, int(ceil(m_height / float(m_itemTemplate.m_height))));
+//
+		//vec2 offset = vec2(0);
+		//ivec2 navOffset = ivec2(0);
+//
+		//for (uint i = 0; i < uint(max(m_owner.equipInventory.m_items.length(), baseSize.x * baseSize.y)); i++)
+		//{
+		//	auto item = cast<EquipmentItemWidget>(m_itemTemplate.Clone());
+//
+		//	item.SetID("");
+		//	item.m_offset = offset;
+		//	if (i < m_owner.equipInventory.m_items.length())
+		//		item.Set(m_owner.equipInventory.m_items[i], this);
+//
+		//	item.m_visible = true;
+		//	item.m_navPos += navOffset;
+		//	@item.m_inventory = this;
+//
+		//	AddChild(item);
+//
+		//	navOffset.x += 1;
+//
+		//	offset.x += item.m_width;
+		//	if ((offset.x + item.m_width) > m_width)
+		//	{
+		//		offset.x = 0;
+		//		offset.y += item.m_height;
+//
+		//		navOffset.x = 0;
+		//		navOffset.y += 1;
+//
+		//		if (m_owner.equipInventory.m_items.length() / baseSize.x > baseSize.y)
+		//			baseSize.y++;
+		//	}
+		//}
+//
+		//m_height = navOffset.y * m_itemTemplate.m_height;
 	}
 }
 

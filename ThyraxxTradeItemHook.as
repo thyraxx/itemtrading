@@ -12,8 +12,15 @@ namespace itemtrading
 	[Hook]
 	void PickedCharacter(PlayerRecord@ record)
 	{
-		m_tradingWindow.m_equipmentWidget.SetOwner(record);
+		//m_tradingWindow.m_equipmentWidget.SetOwner(record);
 		m_tradingWindow.m_equipmentInventoryWidget.SetOwner(record);
+		//m_tradingWindow.m_equipmentInventoryWidget.SetOwner(record);
+		//m_tradingWindow.m_equipmentInventoryWidget.SetOwner(GetLocalPlayerRecord());
+
+
+		//@m_tradingWindow.m_equipmentInventoryWidget = cast<TradingEquipmentInventoryWidget>(m_tradingWindow.m_widget.GetWidgetById("equipment-inventory"));
+		//@m_tradingWindow.m_equipmentInventoryWidget.m_itemTemplate = cast<EquipmentItemWidget>(m_tradingWindow.m_widget.GetWidgetById("equipment-item-template"));
+
 	}
 
 	[Hook]
