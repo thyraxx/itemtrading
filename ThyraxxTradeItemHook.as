@@ -6,6 +6,8 @@ namespace itemtrading
 	void GameModeStart(AGameplayGameMode@ aGameplayGameMode, SValue@ save) 
 	{
 		print("We are here--");
+		@equipInventoryOffer = EquipmentInventory(GetLocalPlayerRecord());
+		equipInventoryOffer.m_maxItems = 9;
 		@m_tradingWindow = TradingWindow(aGameplayGameMode.m_guiBuilder);
 	}
 
@@ -13,6 +15,7 @@ namespace itemtrading
 	void PickedCharacter(PlayerRecord@ record)
 	{
 		//m_tradingWindow.m_equipmentWidget.SetOwner(record);
+		@m_tradingWindow.m_equipmentInventoryWidget.m_owner = @record;
 		m_tradingWindow.m_equipmentInventoryWidget.SetOwner(record);
 		//m_tradingWindow.m_equipmentInventoryWidget.SetOwner(record);
 		//m_tradingWindow.m_equipmentInventoryWidget.SetOwner(GetLocalPlayerRecord());
@@ -20,7 +23,6 @@ namespace itemtrading
 
 		//@m_tradingWindow.m_equipmentInventoryWidget = cast<TradingEquipmentInventoryWidget>(m_tradingWindow.m_widget.GetWidgetById("equipment-inventory"));
 		//@m_tradingWindow.m_equipmentInventoryWidget.m_itemTemplate = cast<EquipmentItemWidget>(m_tradingWindow.m_widget.GetWidgetById("equipment-item-template"));
-
 	}
 
 	[Hook]
@@ -41,10 +43,19 @@ namespace itemtrading
 	}
 
 	[Hook]
+	void GameModePostStart(AGameplayGameMode@ aGameplayGameMode) {
+		print("GameModePostStart---");
+	}
+
+	[Hook]
 	void LoadWidgetProducers(GUIBuilder@ builder) 
 	{
 		builder.AddWidgetProducer("tradingequipmentinventory", LoadTradingEquipmentInventoryWidget);
+		builder.AddWidgetProducer("tradingequipmentinventoryoffer", LoadTradingEquipmentInventoryOfferWidget);
 		builder.AddWidgetProducer("tradingequipmentitem", LoadTradingEquipmentInventoryWidget);
 	}
 
 }
+
+EquipmentInventory@ equipInventoryOffer;
+EquipmentInventory@ equipInventoryCounterOffer;

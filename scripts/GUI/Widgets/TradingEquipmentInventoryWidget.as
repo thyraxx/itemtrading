@@ -29,9 +29,12 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 		print("onclick " + item.GetName());
 
 
-		//auto equip = cast<Equipment::Equipment>(item);
-		//if (equip !is null)
-		//	m_owner.equipInventory.Add(item);
+		auto equip = cast<Equipment::Equipment>(item);
+		if (equip !is null)
+			equipInventoryOffer.Add(item);
+
+
+		//m_host.OnFunc(this, "refresh");
 		
 		//if (!m_owner.equipInventory.Remove(item))
 		//	return;
@@ -40,6 +43,9 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 
 	void DoLayout(vec2 origin, vec2 parentSz) override
 	{
+		//if (!m_visible)
+		//	return;
+
 		if(m_owner is null)
 			@m_owner = GetLocalPlayerRecord();
 
@@ -47,10 +53,10 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 
 		//if (!m_visible)
 		//	return;
-////
+//
 		//for (uint i = 0; i < m_children.length(); i++)
 		//{
-		//	auto child = cast<TradingEquipmentItemWidget>(m_children[i]);
+		//	auto child = cast<EquipmentItemWidget>(m_children[i]);
 		//	if (child is null)
 		//		continue;
 		//	
@@ -68,21 +74,23 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 	{
 		EquipmentInventoryWidget::Refresh();
 
+		//if (!m_visible)
+		//	return;
 		//ClearChildren();
-//
+		//print("equipment-item-template-offer is null " + (cast<EquipmentItemWidget>(m_window.m_widget.GetWidgetById("equipment-item-template-offer")) is null) );
 		//vec2 baseSize = vec2(m_width / m_itemTemplate.m_width, int(ceil(m_height / float(m_itemTemplate.m_height))));
 //
 		//vec2 offset = vec2(0);
 		//ivec2 navOffset = ivec2(0);
 //
-		//for (uint i = 0; i < uint(max(m_owner.equipInventory.m_items.length(), baseSize.x * baseSize.y)); i++)
+		//for (uint i = 0; i < uint(max(equipInventoryOffer.m_items.length(), baseSize.x * baseSize.y)); i++)
 		//{
 		//	auto item = cast<EquipmentItemWidget>(m_itemTemplate.Clone());
 //
 		//	item.SetID("");
 		//	item.m_offset = offset;
-		//	if (i < m_owner.equipInventory.m_items.length())
-		//		item.Set(m_owner.equipInventory.m_items[i], this);
+		//	if (i < equipInventoryOffer.m_items.length())
+		//		item.Set(equipInventoryOffer.m_items[i], this);
 //
 		//	item.m_visible = true;
 		//	item.m_navPos += navOffset;
@@ -101,13 +109,27 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 		//		navOffset.x = 0;
 		//		navOffset.y += 1;
 //
-		//		if (m_owner.equipInventory.m_items.length() / baseSize.x > baseSize.y)
+		//		if (equipInventoryOffer.m_items.length() / baseSize.x > baseSize.y)
 		//			baseSize.y++;
 		//	}
 		//}
 //
 		//m_height = navOffset.y * m_itemTemplate.m_height;
 	}
+
+	//void Update(int dt) override
+	//{
+	//	Widget::Update(dt);
+//
+	//	if (!m_visible)
+	//		return;
+//
+	//	if (equipInventoryOffer.m_isDirty)
+	//	{
+	//		Refresh();
+	//		equipInventoryOffer.m_isDirty = false;
+	//	}
+	//}
 }
 
 ref@ LoadTradingEquipmentInventoryWidget(WidgetLoadingContext &ctx)
