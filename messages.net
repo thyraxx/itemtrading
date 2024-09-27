@@ -1,0 +1,25 @@
+<!--
+	Unreliable
+	UnreliableSequenced
+	ReliableUnordered
+	ReliableSequenced
+	ReliableOrdered
+-->
+<network>
+	<message name="SyncAddItem" namespace="PlayerHandlerTrading" delivery="ReliableOrdered">
+		<svalue /> <!-- Equipment Item -->
+	</message>
+
+	<message name="SyncRemoveItem" namespace="PlayerHandlerTrading" delivery="ReliableOrdered">
+		<svalue /> <!-- Equipment Item -->
+	</message>
+
+	<message name="SendTradeRequestToPeer" namespace="PlayerHandlerTrading" delivery="ReliableOrdered">
+		<int /> <!-- Peer -->
+	</message>
+
+	<message name="CancelTrade" namespace="PlayerHandlerTrading" delivery="ReliableOrdered">
+		<int /> <!-- Peer -->
+	</message>
+
+</network>
