@@ -1,0 +1,51 @@
+<gui>
+	<sprites>
+		%include "gui/scrollbar_sprites.inc"
+
+		<sprite name="scalebutton-player-block-left" texture="gui/gui.png"><frame>64 40 18 36</frame></sprite>
+		<sprite name="scalebutton-player-block-mid" texture="gui/gui.png"><frame>81 40 1 36</frame></sprite>
+		<sprite name="scalebutton-player-block-right" texture="gui/gui.png"><frame>82 40 18 36</frame></sprite>
+
+		<sprite name="scalebutton-player-block-hover-left" texture="gui/gui.png"><frame>100 40 18 36</frame></sprite>
+		<sprite name="scalebutton-player-block-hover-mid" texture="gui/gui.png"><frame>117 40 1 36</frame></sprite>
+		<sprite name="scalebutton-player-block-hover-right" texture="gui/gui.png"><frame>118 40 18 36</frame></sprite>
+
+		<sprite name="scalebutton-player-block-down-left" texture="gui/gui.png"><frame>100 40 18 36</frame></sprite>
+		<sprite name="scalebutton-player-block-down-mid" texture="gui/gui.png"><frame>117 40 1 36</frame></sprite>
+		<sprite name="scalebutton-player-block-down-right" texture="gui/gui.png"><frame>118 40 18 36</frame></sprite>
+
+		<sprite name="scalebutton-player-block-disabled-left" texture="gui/gui.png"><frame>64 40 18 36</frame></sprite>
+		<sprite name="scalebutton-player-block-disabled-mid" texture="gui/gui.png"><frame>81 40 1 36</frame></sprite>
+		<sprite name="scalebutton-player-block-disabled-right" texture="gui/gui.png"><frame>82 40 18 36</frame></sprite>
+	</sprites>
+
+	<doc>
+		<group>
+			<group width="322" height="311" anchor="0.5 0.5" >
+
+				<!-- Template -->
+				<scalebutton id="player-template" width="278" offset="4 1" padding="7 2" spriteset="scalebutton-player-block" func="N/A" visible="false" >
+					<text id="name" text="unknown" font="header" anchor="0 0" padding="4 4" offset="0 0" color="#ffffff" />
+					<text id="class" text="unknown" font="header" anchor="0 1" padding="4 4" offset="0 0" color="#ffffff" />
+					<text id="level" text="lv. -1" font="header" anchor="1 1" padding="4 4" offset="0 0" color="#ffffff" />
+					<text id="ping" text="-99 ms" font="header" anchor="1 0" padding="4 4" offset="0 0" color="#ffffff" />
+				</scalebutton>
+
+				<!-- Header -->
+				<panel anchor="0.5 0" style="character_pick_top" width="322" height="40" flow="vbox" >
+					<text text="player list" font="header" anchor="0.5 0.5" offset="0 0" color="#ffffff" />
+				</panel>
+
+				<!-- Bot -->
+				<panel anchor="0.5 1" style="character_pick_bot" width="322" height="40" />
+
+				<!-- Content -->
+				<panel anchor="0.5 0.5" offset="0 0" style="character_pick_mid" width="322" height="231" flow="vbox" spacing="2" >
+					<rect width="296" height="231" anchor="0.5 0" offset="0 0" spriteset="gui/sprite_rect.sval:square-roundedleft" >
+						<scrollbar id="list" nav-pos="0 0" spriteset="angular-scrollbar" bar-offset="0 0" width="284" height="225" anchor="0 0" offset="0 3" spacing="1" flow="vbox" escape-down="false" escape-up="false" />
+					</rect>
+				</panel>
+			</group>
+		</group>
+	</doc>
+</gui>
