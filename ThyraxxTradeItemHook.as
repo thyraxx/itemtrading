@@ -32,22 +32,20 @@ namespace itemtrading
 	[Hook]
 	void GameModeUpdate(BaseGameMode@ baseGameMode, int ms, GameInput& gameInput, MenuInput& menuInput) 
 	{
-		if(m_tradingWindow is null)
+		if(m_tradePlayerList is null)
 			return;
 
 		//print("Platform::GetKeyState(58).Pressed: " + Platform:	:GetKeyState(58).Pressed);
-		if(Platform::GetKeyState(58).Pressed)
-		{
-			//print("trading window activated");
+		if(!Platform::GetKeyState(58).Pressed)
+			return;
 			
-			if(cast<TradePlayerListWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null) {
-				print("cast<TradingWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null:" + (cast<TradePlayerListWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null) );
-				//baseGameMode.m_windowManager.AddWindowObject(m_tradingWindow);
-				baseGameMode.m_windowManager.AddWindowObject(m_tradePlayerList);
-			}else{
-				print("Filename def: " + (baseGameMode.m_windowManager.GetCurrentWindow() is null ? "null" : baseGameMode.m_windowManager.GetCurrentWindow().m_filenameDef) );
-				baseGameMode.m_windowManager.CloseWindow(m_tradePlayerList);
-			}
+		if(cast<TradePlayerListWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null) {
+			print("cast<TradingWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null:" + (cast<TradePlayerListWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null) );
+			//baseGameMode.m_windowManager.AddWindowObject(m_tradingWindow);
+			baseGameMode.m_windowManager.AddWindowObject(m_tradePlayerList);
+		}else{
+			print("Filename def: " + (baseGameMode.m_windowManager.GetCurrentWindow() is null ? "null" : baseGameMode.m_windowManager.GetCurrentWindow().m_filenameDef) );
+			baseGameMode.m_windowManager.CloseWindow(m_tradePlayerList);
 		}
 	}
 
