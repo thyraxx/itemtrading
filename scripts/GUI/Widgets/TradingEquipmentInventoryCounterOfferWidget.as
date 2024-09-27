@@ -1,8 +1,8 @@
-class TradingEquipmentInventoryOfferWidget : EquipmentInventoryWidget
+class TradingEquipmentInventoryCounterOfferWidget : EquipmentInventoryWidget
 {
-	int offerPeer;
+	int counterOfferPeer;
 
-	TradingEquipmentInventoryOfferWidget() {
+	TradingEquipmentInventoryCounterOfferWidget() {
 		super();
 	}
 
@@ -21,7 +21,7 @@ class TradingEquipmentInventoryOfferWidget : EquipmentInventoryWidget
 
 		//auto equip = cast<Equipment::Equipment>(item);
 		if (item !is null) {
-			equipInventoryOffer.Remove(item);
+			equipInventoryCounterOffer.Remove(item);
 
 			SValueBuilder builder;
 			Item::SaveItem(builder, item);
@@ -46,16 +46,16 @@ class TradingEquipmentInventoryOfferWidget : EquipmentInventoryWidget
 		vec2 offset = vec2(0);
 		ivec2 navOffset = ivec2(0);
 
-		for (uint i = 0; i < uint(max(equipInventoryOffer.m_items.length(), baseSize.x * baseSize.y)); i++)
+		for (uint i = 0; i < uint(max(equipInventoryCounterOffer.m_items.length(), baseSize.x * baseSize.y)); i++)
 		{
 			auto item = cast<EquipmentItemWidget>(m_itemTemplate.Clone());
 
-			//item.SetID(cast<Equipment::Item>(equipInventoryOffer.m_items[i]).baseItem.m_idHash);
-			//item.SetID( equipInventoryOffer.m_items[i].GetIDHash() );
+			//item.SetID(cast<Equipment::Item>(equipInventoryCounterOffer.m_items[i]).baseItem.m_idHash);
+			//item.SetID( equipInventoryCounterOffer.m_items[i].GetIDHash() );
 			item.SetID("");
 			item.m_offset = offset;
-			if (i < equipInventoryOffer.m_items.length())
-				item.Set(equipInventoryOffer.m_items[i], this);
+			if (i < equipInventoryCounterOffer.m_items.length())
+				item.Set(equipInventoryCounterOffer.m_items[i], this);
 
 			item.m_visible = true;
 			item.m_navPos += navOffset;
@@ -74,7 +74,7 @@ class TradingEquipmentInventoryOfferWidget : EquipmentInventoryWidget
 				navOffset.x = 0;
 				navOffset.y += 1;
 
-				if (equipInventoryOffer.m_items.length() / baseSize.x > baseSize.y)
+				if (equipInventoryCounterOffer.m_items.length() / baseSize.x > baseSize.y)
 					baseSize.y++;
 			}
 		}
@@ -87,10 +87,10 @@ class TradingEquipmentInventoryOfferWidget : EquipmentInventoryWidget
 		if (!m_visible)
 			return;
 
-		if (equipInventoryOffer.m_isDirty)
+		if (equipInventoryCounterOffer.m_isDirty)
 		{
 			Refresh();
-			equipInventoryOffer.m_isDirty = false;
+			equipInventoryCounterOffer.m_isDirty = false;
 		}
 	}
 
@@ -115,9 +115,9 @@ class TradingEquipmentInventoryOfferWidget : EquipmentInventoryWidget
 	}
 }
 
-ref@ LoadTradingEquipmentInventoryOfferWidget(WidgetLoadingContext &ctx)
+ref@ LoadTradingEquipmentInventoryCounterOfferWidget(WidgetLoadingContext &ctx)
 {
-	TradingEquipmentInventoryOfferWidget@ w = TradingEquipmentInventoryOfferWidget();
+	TradingEquipmentInventoryCounterOfferWidget@ w = TradingEquipmentInventoryCounterOfferWidget();
 	w.Load(ctx);
 	return w;
 }
