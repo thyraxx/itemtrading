@@ -1,28 +1,32 @@
 namespace itemtrading
 {
+
 	TradingWindow@ m_tradingWindow;
+	TradePlayerListWindow@ m_tradePlayerList;
+	bool isTradingRequested = false;
 
 	[Hook]
 	void GameModeStart(AGameplayGameMode@ aGameplayGameMode, SValue@ save) 
 	{
 		print("We are here--");
+		// Offer window
 		@equipInventoryOffer = EquipmentInventory(GetLocalPlayerRecord());
 		equipInventoryOffer.m_maxItems = 9;
+		
+		// Counter offer window
+		@equipInventoryCounterOffer = EquipmentInventory(GetLocalPlayerRecord());
+		equipInventoryCounterOffer.m_maxItems = 9;
+		
 		@m_tradingWindow = TradingWindow(aGameplayGameMode.m_guiBuilder);
+		@m_tradePlayerList = TradePlayerListWindow(aGameplayGameMode.m_guiBuilder);
+
+		print("isServer: " + Network::IsServer());
 	}
 
 	[Hook]
 	void PickedCharacter(PlayerRecord@ record)
 	{
-		//m_tradingWindow.m_equipmentWidget.SetOwner(record);
-		@m_tradingWindow.m_equipmentInventoryWidget.m_owner = @record;
-		m_tradingWindow.m_equipmentInventoryWidget.SetOwner(record);
-		//m_tradingWindow.m_equipmentInventoryWidget.SetOwner(record);
-		//m_tradingWindow.m_equipmentInventoryWidget.SetOwner(GetLocalPlayerRecord());
-
-
-		//@m_tradingWindow.m_equipmentInventoryWidget = cast<TradingEquipmentInventoryWidget>(m_tradingWindow.m_widget.GetWidgetById("equipment-inventory"));
-		//@m_tradingWindow.m_equipmentInventoryWidget.m_itemTemplate = cast<EquipmentItemWidget>(m_tradingWindow.m_widget.GetWidgetById("equipment-item-template"));
+		m_equipmentTradingInventoryWidget.SetOwner(record);
 	}
 
 	[Hook]
@@ -31,14 +35,19 @@ namespace itemtrading
 		if(m_tradingWindow is null)
 			return;
 
+		//print("Platform::GetKeyState(58).Pressed: " + Platform:	:GetKeyState(58).Pressed);
 		if(Platform::GetKeyState(58).Pressed)
 		{
-			print("trading window activated");
+			//print("trading window activated");
 			
-			if(cast<TradingWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null)
-				baseGameMode.m_windowManager.AddWindowObject(m_tradingWindow);
-			else
-				baseGameMode.m_windowManager.CloseWindow(m_tradingWindow);
+			if(cast<TradePlayerListWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null) {
+				print("cast<TradingWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null:" + (cast<TradePlayerListWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null) );
+				//baseGameMode.m_windowManager.AddWindowObject(m_tradingWindow);
+				baseGameMode.m_windowManager.AddWindowObject(m_tradePlayerList);
+			}else{
+				print("Filename def: " + (baseGameMode.m_windowManager.GetCurrentWindow() is null ? "null" : baseGameMode.m_windowManager.GetCurrentWindow().m_filenameDef) );
+				baseGameMode.m_windowManager.CloseWindow(m_tradePlayerList);
+			}
 		}
 	}
 
@@ -52,10 +61,13 @@ namespace itemtrading
 	{
 		builder.AddWidgetProducer("tradingequipmentinventory", LoadTradingEquipmentInventoryWidget);
 		builder.AddWidgetProducer("tradingequipmentinventoryoffer", LoadTradingEquipmentInventoryOfferWidget);
-		builder.AddWidgetProducer("tradingequipmentitem", LoadTradingEquipmentInventoryWidget);
+		builder.AddWidgetProducer("tradingequipmentinventorycounteroffer", LoadTradingEquipmentInventoryCounterOfferWidget);
 	}
 
 }
 
 EquipmentInventory@ equipInventoryOffer;
 EquipmentInventory@ equipInventoryCounterOffer;
+TradingEquipmentInventoryWidget@ m_equipmentTradingInventoryWidget;
+TradingEquipmentInventoryOfferWidget@ m_equipmentInventoryWidgetOffer;
+TradingEquipmentInventoryCounterOfferWidget@ m_equipmentInventoryWidgetCounterOffer;
