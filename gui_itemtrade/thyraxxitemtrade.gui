@@ -72,7 +72,7 @@
 							<rect width="96" height="87" anchor="1 0" offset="-2 -2" spriteset="gui/sprite_rect.sval:square-rl" />
 
 								<scrollbar id="inventory-scroll" nav-pos="0 3" spriteset="angular-scrollbar" bar-offset="1 0" width="81" height="81" anchor="0 0" offset="0 1" escape-down="false" >
-									<tradingequipmentinventoryoffer id="equipment-inventory-offer" width="83" height="81" anchor="0 0" offset="0 0" visible="true" />
+									<tradingequipmentinventoryoffer peer="" id="equipment-inventory-offer" width="83" height="81" anchor="0 0" offset="0 0" visible="true" />
 								</scrollbar>
 						</group>
 					</group>
@@ -90,13 +90,13 @@
 					<group anchor="0.5 0" width="80" height="85" offset="0 2" >
 
 						<!-- Grid -->
-						<!-- <equipmentitem id="equipment-item-template-counter-offer" offset="0 0" width="27" height="27" anchor="0 0" background-src="inventory-slot" hover-src="inventory-slot-hover" visible="false" type="inventory" /> -->
+						<equipmentitem id="equipment-item-template-counter-offer" offset="0 0" width="27" height="27" anchor="0 0" background-src="inventory-slot" hover-src="inventory-slot-hover" visible="false" type="inventory" />
 
 						<group width="96" height="83" anchor="0.5 0" offset="0 0" >
 							<rect width="96" height="87" anchor="1 0" offset="-2 -2" spriteset="gui/sprite_rect.sval:square-rl" />
 
 								<scrollbar id="inventory-scroll-counter-offer" nav-pos="0 3" spriteset="angular-scrollbar" bar-offset="1 0" width="81" height="81" anchor="0 0" offset="0 1" escape-down="false" >
-									<!-- <tradingequipmentinventory id="equipment-inventory-counter-offer" width="83" height="81" anchor="0 0" offset="0 0" visible="true" /> -->
+									<tradingequipmentinventorycounteroffer peer="" id="equipment-inventory-counter-offer" width="83" height="81" anchor="0 0" offset="0 0" visible="true" />
 								</scrollbar>
 						</group>
 					</group>
