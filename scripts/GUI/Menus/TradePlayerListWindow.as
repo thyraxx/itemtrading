@@ -32,16 +32,18 @@ namespace itemtrading
 
 		void UpdatePlayerList()
 		{
-			int numPlayers = Lobby::GetLobbyPlayerCount();
-			m_lastNumPlayers = numPlayers;
+			m_lastNumPlayers = g_players.length();
 
 			m_list.ClearChildren();
-			for (int i = 0; i < numPlayers; i++)
+			for (int i = 0; i < g_players.length(); i++)
 			{
+				//if(GetLocalPlayerRecord().peer == g_players[i].peer)
+				//	continue;
+
 				auto newPlayer = cast<AInteractableWidget>(m_playerTemplate.Clone());
-				newPlayer.SetID("player-" + i);
+				newPlayer.SetID("player-" + g_players[i].peer);
 				newPlayer.m_visible = true;
-				newPlayer.m_func = "select " + i;
+				newPlayer.m_func = "trade " + GetLocalPlayerRecord().peer + " " + g_players[i].peer;
 				newPlayer.m_navPos = ivec2(0, i);
 
 				m_list.AddChild(newPlayer);
@@ -132,8 +134,16 @@ namespace itemtrading
 		void OnFunc(Widget@ sender, const string &in name) override
 		{
 			auto parse = name.split(" ");
-			if (parse[0] == "select")
-				m_manager.AddWindowObject(WindowPlayerListDetails(m_builder, m_manager, cast<TextWidget>(sender.GetWidgetById("name")).m_str, parseInt(parse[1])));
+
+			// GetLocalPlayerRecord: parse[1] 
+			// Peer = parse[2]
+			if (parse[0] == "trade") {
+				print("GetLocalPlayerRecord: " + parseInt(parse[1]) + " peer: " + parseInt(parse[2]) );
+				print(GetPlayerRecordByPeer(parseInt(parse[2])).name );
+				//m_manager.AddWindowObject(WindowPlayerListDetails(m_builder, m_manager, cast<TextWidget>(sender.GetWidgetById("name")).m_str, parseInt(parse[1])));
+
+			}
+
 		}
 	}
 }
