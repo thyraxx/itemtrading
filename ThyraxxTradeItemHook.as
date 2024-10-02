@@ -1,9 +1,10 @@
 namespace itemtrading
 {
 
+	TradeRequest@ m_tradeRequest;
 	TradingWindow@ m_tradingWindow;
 	TradePlayerListWindow@ m_tradePlayerList;
-	bool isTradingRequested = false;
+	Trade@ m_trade = Trade();
 
 	[Hook]
 	void GameModeStart(AGameplayGameMode@ aGameplayGameMode, SValue@ save) 
@@ -18,7 +19,7 @@ namespace itemtrading
 		equipInventoryCounterOffer.m_maxItems = 9;
 		
 		@m_tradingWindow = TradingWindow(aGameplayGameMode.m_guiBuilder);
-		@m_tradePlayerList = TradePlayerListWindow(aGameplayGameMode.m_guiBuilder);
+		@m_tradeRequest = TradeRequest(aGameplayGameMode.m_guiBuilder);
 
 		print("isServer: " + Network::IsServer());
 	}
@@ -32,26 +33,27 @@ namespace itemtrading
 	[Hook]
 	void GameModeUpdate(BaseGameMode@ baseGameMode, int ms, GameInput& gameInput, MenuInput& menuInput) 
 	{
-		if(m_tradePlayerList is null)
-			return;
-
-		//print("Platform::GetKeyState(58).Pressed: " + Platform:	:GetKeyState(58).Pressed);
+		// Keycode 58 = F1
 		if(!Platform::GetKeyState(58).Pressed)
 			return;
-			
-		if(cast<TradePlayerListWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null) {
-			print("cast<TradingWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null:" + (cast<TradePlayerListWindow>(baseGameMode.m_windowManager.GetCurrentWindow()) is null) );
-			//baseGameMode.m_windowManager.AddWindowObject(m_tradingWindow);
-			baseGameMode.m_windowManager.AddWindowObject(m_tradePlayerList);
-		}else{
-			print("Filename def: " + (baseGameMode.m_windowManager.GetCurrentWindow() is null ? "null" : baseGameMode.m_windowManager.GetCurrentWindow().m_filenameDef) );
+
+		// Showing how many Window objects there are, if 0 you don't have any UI windows open like Character sheet or guild hall
+		//print("m_objects.length(): " + baseGameMode.m_windowManager.m_objects.length());
+		
+		if(baseGameMode.m_windowManager.GetCurrentWindow() is null && baseGameMode.m_windowManager.m_objects.length() == 0)
+			baseGameMode.m_windowManager.AddWindowObject(@m_tradePlayerList = TradePlayerListWindow(baseGameMode.m_guiBuilder));
+		else
 			baseGameMode.m_windowManager.CloseWindow(m_tradePlayerList);
-		}
 	}
 
 	[Hook]
 	void GameModePostStart(AGameplayGameMode@ aGameplayGameMode) {
 		print("GameModePostStart---");
+	}
+
+	[Hook]
+	void HUDConstructor(HUD@ hud, GUIBuilder@ guiBuilder) {
+		hud.m_components.insertLast(m_tradeRequest);
 	}
 
 	[Hook]
