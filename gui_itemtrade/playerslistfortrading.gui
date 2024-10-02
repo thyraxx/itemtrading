@@ -1,6 +1,8 @@
 <gui>
 	<sprites>
 		%include "gui/scrollbar_sprites.inc"
+		%include "gui/scalablebutton_sprites.inc"
+		%include "gui/button_sprites.inc"
 
 		<sprite name="scalebutton-player-block-left" texture="gui/gui.png"><frame>64 40 18 36</frame></sprite>
 		<sprite name="scalebutton-player-block-mid" texture="gui/gui.png"><frame>81 40 1 36</frame></sprite>
@@ -24,16 +26,21 @@
 			<group width="322" height="311" anchor="0.5 0.5" >
 
 				<!-- Template -->
-				<scalebutton id="player-template" width="278" offset="4 1" padding="7 2" spriteset="scalebutton-player-block" func="N/A" visible="false" >
-					<text id="name" text="unknown" font="header" anchor="0 0" padding="4 4" offset="0 0" color="#ffffff" />
-					<text id="class" text="unknown" font="header" anchor="0 1" padding="4 4" offset="0 0" color="#ffffff" />
-					<text id="level" text="lv. -1" font="header" anchor="1 1" padding="4 4" offset="0 0" color="#ffffff" />
-					<text id="ping" text="-99 ms" font="header" anchor="1 0" padding="4 4" offset="0 0" color="#ffffff" />
+				<scalebutton id="player-template" width="278" offset="4 1" spriteset="scalebutton-regular" func="trade" visible="false">
+					<text id="name" text="unknown" align="center" font="header" anchor="0.5 0" padding="4 4" offset="0 0" color="#ffffff" />
 				</scalebutton>
+				
+				<!-- Original -->
+				<!-- <scalebutton id="player-template" width="278" offset="4 1" padding="7 2" spriteset="scalebutton-regular" func="N/A" visible="true" > -->
+					<!-- <text id="name" text="unknown" font="header" anchor="0 0" padding="4 4" offset="0 0" color="#ffffff" /> -->
+					<!-- <text id="class" text="unknown" font="header" anchor="0 1" padding="4 4" offset="0 0" color="#ffffff" /> -->
+					<!-- <text id="level" text="lv. -1" font="header" anchor="1 1" padding="4 4" offset="0 0" color="#ffffff" /> -->
+					<!-- <text id="ping" text="-99 ms" font="header" anchor="1 0" padding="4 4" offset="0 0" color="#ffffff" /> -->
+				<!-- </scalebutton> -->
 
 				<!-- Header -->
 				<panel anchor="0.5 0" style="character_pick_top" width="322" height="40" flow="vbox" >
-					<text text="player list" font="header" anchor="0.5 0.5" offset="0 0" color="#ffffff" />
+					<text text="Trade with" font="header" anchor="0.5 0.5" offset="0 0" color="#ffffff" />
 				</panel>
 
 				<!-- Bot -->
