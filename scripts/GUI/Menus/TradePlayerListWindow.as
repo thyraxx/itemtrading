@@ -59,13 +59,11 @@ namespace itemtrading
 				UnitPtr u;
 
 				string playerName = GetParamString(u, data, "player");
-				string playerClass = GetParamString(u, data, "class", false, "");
-				string playerLevel = GetParamString(u, data, "level", false, "");
 				int peer = GetParamInt(u, data, "peer");
 
 				auto playerWidget = m_widget.GetWidgetById("player-" + peer);
 				if (playerWidget !is null)
-					UpdatePlayer(playerWidget, playerName, playerClass, playerLevel, peer);
+					UpdatePlayer(playerWidget, playerName, peer);
 			}
 		}
 
@@ -80,35 +78,18 @@ namespace itemtrading
 			{
 				auto playerWidget = m_widget.GetWidgetById("player-" + peer);
 				if (playerWidget !is null)
-					UpdatePlayer(playerWidget, Lobby::GetPlayerName(peer), "", "", peer);
+					UpdatePlayer(playerWidget, Lobby::GetPlayerName(peer), peer);
 			}
 		}
 
-		void UpdatePlayer(Widget@ playerWidget, const string &in playerName, const string &in playerClass, const string &in playerLevel, int peer)
+		void UpdatePlayer(Widget@ playerWidget, const string &in playerName, int peer)
 		{
-			int localPeer = Lobby::GetLocalPeer();
-			bool isLocal = (localPeer == peer);
-			bool isHost = Lobby::IsPlayerHost(localPeer);
-			int playerPing = GetPeerPing(peer);
-
 			auto nameWidget = cast<TextWidget>(playerWidget.GetWidgetById("name"));
 			if (nameWidget !is null)
 			{
 				nameWidget.SetText(playerName);
 				nameWidget.SetColor(ParseColorRGBA("#" + GetPlayerColor(peer) + "ff"));
 			}
-
-			auto classWidget = cast<TextWidget>(playerWidget.GetWidgetById("class"));
-			if (classWidget !is null)
-				classWidget.SetText(playerClass);
-
-			auto levelWidget = cast<TextWidget>(playerWidget.GetWidgetById("level"));
-			if (levelWidget !is null)
-				levelWidget.SetText(playerLevel);
-
-			auto pingWidget = cast<TextWidget>(playerWidget.GetWidgetById("ping"));
-			if (pingWidget !is null)
-				pingWidget.SetText(isHost ? "host" : Resources::GetString(".menu.playerlist.ping", { { "value", playerPing}}));
 		}
 
 		bool Update(int ms, GameInput& gameInput, MenuInput& menuInput) override
@@ -138,8 +119,9 @@ namespace itemtrading
 			// GetLocalPlayerRecord: parse[1] 
 			// Peer = parse[2]
 			if (parse[0] == "trade") {
+				(Network::Message("SendTradeRequest")).SendToPeer( parseInt(parse[2]) );
 				print("GetLocalPlayerRecord: " + parseInt(parse[1]) + " peer: " + parseInt(parse[2]) );
-				print(GetPlayerRecordByPeer(parseInt(parse[2])).name );
+				print(GetPlayerRecordByPeer(parseInt(parse[1])).name + " : " + GetPlayerRecordByPeer(parseInt(parse[2])).name );
 				//m_manager.AddWindowObject(WindowPlayerListDetails(m_builder, m_manager, cast<TextWidget>(sender.GetWidgetById("name")).m_str, parseInt(parse[1])));
 
 			}
