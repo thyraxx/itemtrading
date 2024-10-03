@@ -1,4 +1,4 @@
-namespace PlayerHandlerTrading
+namespace itemtrading
 {
 	void SendCancelTradeMessage() {
 		
@@ -28,10 +28,29 @@ namespace PlayerHandlerTrading
 		m_equipmentTradingInventoryWidget.Refresh();
 	}
 
-	void SendTradeRequestToPeer(uint8 peer) {
-		if(peer != GetLocalPlayerRecord().peer)
+	void SendTradeRequest(uint8 peer, int senderPeer) {
+		if(peer == GetLocalPlayerRecord().peer)
 			return;
 
+		m_trade.receivingPeer = peer;
+		m_trade.senderPeer = senderPeer;
+
+		auto gm = cast<BaseGameMode>(g_gameMode);
+		if(gm != null) {
+			//m_tradeRequest.m_visible = true;
+			gm.m_windowManager.CloseWindow(m_tradeRequest);
+			gm.m_windowManager.AddWindowObject(m_tradeRequest);
+		}
+	}
+
+	void ReplyAccept(uint8 peer) {
+		if(peer == GetLocalPlayerRecord().peer)
+			return;
+
+
+	}
+
+	void ReplyDeny(uint8 peer) {
 
 	}
 
@@ -44,11 +63,14 @@ namespace PlayerHandlerTrading
 	}
 
 
-	void SendTradeLockMessage(uint8 peer, bool isLocked) {
+	void SendTradeLock(uint8 peer, bool isLocked) {
 
 	}
 
-	void SendTradeConfirmMessage(uint8 peer, bool isConfirmed) {
+	void SendTradeAccepted(uint8 peer, bool isConfirmed) {
 
 	}
+
+
+
 }

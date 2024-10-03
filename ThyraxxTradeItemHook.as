@@ -53,7 +53,7 @@ namespace itemtrading
 
 	[Hook]
 	void HUDConstructor(HUD@ hud, GUIBuilder@ guiBuilder) {
-		hud.m_components.insertLast(m_tradeRequest);
+		//hud.m_components.insertLast(@m_tradeRequest = TradeRequest(guiBuilder));
 	}
 
 	[Hook]
