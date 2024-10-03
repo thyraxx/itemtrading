@@ -19,7 +19,7 @@ namespace itemtrading
 		equipInventoryCounterOffer.m_maxItems = 9;
 		
 		@m_tradingWindow = TradingWindow(aGameplayGameMode.m_guiBuilder);
-		@m_tradeRequest = TradeRequest(aGameplayGameMode.m_guiBuilder);
+		//@m_tradeRequest = TradeRequest(aGameplayGameMode.m_guiBuilder);
 
 		print("isServer: " + Network::IsServer());
 	}
@@ -53,7 +53,7 @@ namespace itemtrading
 
 	[Hook]
 	void HUDConstructor(HUD@ hud, GUIBuilder@ guiBuilder) {
-		//hud.m_components.insertLast(@m_tradeRequest = TradeRequest(guiBuilder));
+		hud.m_components.insertLast(@m_tradeRequest = TradeRequest(guiBuilder, cast<BaseGameMode>(g_gameMode).m_windowManager));
 	}
 
 	[Hook]

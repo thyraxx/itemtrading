@@ -37,9 +37,9 @@ namespace itemtrading
 
 		auto gm = cast<BaseGameMode>(g_gameMode);
 		if(gm != null) {
-			//m_tradeRequest.m_visible = true;
-			gm.m_windowManager.CloseWindow(m_tradeRequest);
-			gm.m_windowManager.AddWindowObject(m_tradeRequest);
+			m_tradeRequest.m_visible = true;
+			//gm.m_windowManager.CloseWindow(m_tradeRequest);
+			//gm.m_windowManager.AddWindowObject(m_tradeRequest);
 		}
 	}
 
