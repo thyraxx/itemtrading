@@ -132,8 +132,6 @@ namespace itemtrading
 	// Both sides
 	void IsTradeLocked(uint8 peer, bool isLocked) {
 
-		//int i = 0;
-		//m_tradingWindow.m_buttonLockWidget.SetText("Lock");
 		if(m_tradeStatus.m_tradeLock && isLocked){
 			m_tradingWindow.m_buttonLockWidget.SetText("Unlock");
 			m_tradeStatus.m_lockAmount = 2;
@@ -148,7 +146,6 @@ namespace itemtrading
 		}
 
 
-		// Not necessary cause 'i' starts at 0, no need to set it.
 		if(!m_tradeStatus.m_tradeLock && !isLocked) {
 			m_tradeStatus.m_lockAmount = 0;
 			m_tradingWindow.m_buttonLockWidget.SetText("Lock");
