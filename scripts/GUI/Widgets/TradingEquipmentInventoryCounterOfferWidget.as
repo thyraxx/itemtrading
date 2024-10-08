@@ -1,6 +1,5 @@
 class TradingEquipmentInventoryCounterOfferWidget : EquipmentInventoryWidget
 {
-	int counterOfferPeer;
 
 	TradingEquipmentInventoryCounterOfferWidget() {
 		super();
@@ -13,29 +12,8 @@ class TradingEquipmentInventoryCounterOfferWidget : EquipmentInventoryWidget
 
 	void OnClick(Equipment::Equipment@ item) override
 	{
-		if(item is null)
-			return;
-
 		print("onclick " + item.GetName());
-
-
-		//auto equip = cast<Equipment::Equipment>(item);
-		if (item !is null) {
-			equipInventoryCounterOffer.Remove(item);
-
-			SValueBuilder builder;
-			Item::SaveItem(builder, item);
-
-			// Peer hardcoded temporarily
-			if(GetLocalPlayerRecord().peer == 0)
-				(Network::Message("SyncRemoveItem") << builder.Build()).SendToPeer(1);
-			else
-				(Network::Message("SyncRemoveItem") << builder.Build()).SendToPeer(0);
-			
-			m_equipmentTradingInventoryWidget.m_owner.equipInventory.m_isDirty = true;
-		}
-
-		m_host.OnFunc(this, "refresh");
+		return;
 	}
 
 	void Refresh() override
