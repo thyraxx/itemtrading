@@ -1,6 +1,5 @@
 class TradingEquipmentInventoryOfferWidget : EquipmentInventoryWidget
 {
-	int offerPeer;
 
 	TradingEquipmentInventoryOfferWidget() {
 		super();
@@ -13,7 +12,9 @@ class TradingEquipmentInventoryOfferWidget : EquipmentInventoryWidget
 
 	void OnClick(Equipment::Equipment@ item) override
 	{
-		if(item is null)
+		print("reqpeer: " + m_tradeStatus.starterPeer + " -> recpeer: " + m_tradeStatus.receiverPeer);
+
+		if(item is null) 
 			return;
 
 		print("onclick " + item.GetName());
@@ -26,11 +27,12 @@ class TradingEquipmentInventoryOfferWidget : EquipmentInventoryWidget
 			SValueBuilder builder;
 			Item::SaveItem(builder, item);
 
-			// Peer hardcoded temporarily
-			if(GetLocalPlayerRecord().peer == 0)
-				(Network::Message("SyncRemoveItem") << builder.Build()).SendToPeer(1);
+			
+			print("m_tradeStatus.receiverPeer: " + m_tradeStatus.receiverPeer);
+			if(GetLocalPlayerRecord().peer == m_tradeStatus.starterPeer)
+				(Network::Message("SyncRemoveItem") << builder.Build()).SendToPeer(m_tradeStatus.receiverPeer);
 			else
-				(Network::Message("SyncRemoveItem") << builder.Build()).SendToPeer(0);
+				(Network::Message("SyncRemoveItem") << builder.Build()).SendToPeer(m_tradeStatus.starterPeer);
 			
 			m_equipmentTradingInventoryWidget.m_owner.equipInventory.m_isDirty = true;
 		}

@@ -1,0 +1,25 @@
+<gui>
+	<sprites>
+		%include "gui/button_sprites.inc"
+
+		<sprite name="play" texture="gui/panelstyles.png"><frame>159 314 18 18</frame></sprite>
+		<sprite name="play-hover" texture="gui/panelstyles.png"><frame>159 332 18 18</frame></sprite>
+		<sprite name="play-down" texture="gui/panelstyles.png"><frame>159 350 18 18</frame></sprite>
+		<sprite name="play-disabled" texture="gui/panelstyles.png"><frame>159 368 18 18</frame></sprite>
+
+		<sprite name="close" texture="gui/panelstyles.png"><frame>0 158 18 18</frame></sprite>
+		<sprite name="close-hover" texture="gui/panelstyles.png"><frame>0 194 18 18</frame></sprite>
+		<sprite name="close-down" texture="gui/panelstyles.png"><frame>0 212 18 18</frame></sprite>
+		<sprite name="close-disabled" texture="gui/panelstyles.png"><frame>0 230 18 18</frame></sprite>
+	</sprites>
+
+	<doc>
+		<group>
+			<group width="130" height="36" anchor="0.10 0.95" flow="hboxwrapped">
+				<text anchor="0.5 0" align="center" id="name" text="unknown wants to trade" font="header" color="#ffffff" />
+				<spritebutton anchor="0.2 0" id="tradeaccept" width="18" height="18" spriteset="play" func="accept" />
+				<spritebutton anchor="0.4 0" id="tradedeny" width="18" height="18" spriteset="close" func="deny" />
+			</group>
+		</group>
+	</doc>
+</gui>

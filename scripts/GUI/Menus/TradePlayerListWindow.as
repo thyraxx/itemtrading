@@ -37,8 +37,8 @@ namespace itemtrading
 			m_list.ClearChildren();
 			for (int i = 0; i < g_players.length(); i++)
 			{
-				//if(GetLocalPlayerRecord().peer == g_players[i].peer)
-				//	continue;
+				if(Lobby::IsPlayerLocal(g_players[i].peer))
+					continue;
 
 				auto newPlayer = cast<AInteractableWidget>(m_playerTemplate.Clone());
 				newPlayer.SetID("player-" + g_players[i].peer);
@@ -112,20 +112,28 @@ namespace itemtrading
 			return AWindowObject::Update(ms, gameInput, menuInput);
 		}
 
+		void OnClose() override {
+			m_closing = false;
+		}
+
 		void OnFunc(Widget@ sender, const string &in name) override
 		{
 			auto parse = name.split(" ");
 
 			// GetLocalPlayerRecord: parse[1] 
 			// Peer = parse[2]
+
+			// Send request to person
+			// Person receives TradeRequest.as
+			// Person clicks accept/deny or window timeout
+			// Request is sent back to starter
 			if (parse[0] == "trade") {
-				(Network::Message("SendTradeRequest")).SendToPeer( parseInt(parse[2]) );
-				print("GetLocalPlayerRecord: " + parseInt(parse[1]) + " peer: " + parseInt(parse[2]) );
-				print(GetPlayerRecordByPeer(parseInt(parse[1])).name + " : " + GetPlayerRecordByPeer(parseInt(parse[2])).name );
-				//m_manager.AddWindowObject(WindowPlayerListDetails(m_builder, m_manager, cast<TextWidget>(sender.GetWidgetById("name")).m_str, parseInt(parse[1])));
-
+				int starterPeer = parseInt(parse[1]);
+				int receiverPeer = parseInt(parse[2]);
+				(Network::Message("SendTradeRequest") << starterPeer << receiverPeer).SendToPeer(receiverPeer);
+				print("GetLocalPlayerRecord: " + starterPeer + " peer: " + receiverPeer);
+				print(GetPlayerRecordByPeer(receiverPeer).name + " : " + GetPlayerRecordByPeer(starterPeer).name );
 			}
-
 		}
 	}
 }
