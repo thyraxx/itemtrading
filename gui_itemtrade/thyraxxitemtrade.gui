@@ -48,10 +48,10 @@
 			<!-- Buttons -->
 			<!-- offset not right? -->
 			<group height="36" width="150" anchor="0.5 0.5">
-				<text anchor="0.15 0" offset="0 20" text="0/2" font="header" />
+				<text id="amountlocked" anchor="0.15 0" offset="0 20" text="0/2" font="header" />
 
-				<scalebutton id="tradelock" spriteset="scalebutton-regular" width="60" height="18" offset="0 0" anchor="0 0" func="tradelock" font="gui/fonts/arial11.fnt" text="Lock in" />
-				<scalebutton id="tradeconfirm" spriteset="scalebutton-regular" width="60" height="18" offset="0 0" anchor="1 0" func="tradeconfirm" font="gui/fonts/arial11.fnt" text="Confirm" enabled="0" />
+				<scalebutton id="tradelock" spriteset="scalebutton-regular" width="60" height="18" offset="0 0" anchor="0 0" func="tradelock" font="gui/fonts/arial11.fnt" text="Lock" />
+				<scalebutton id="tradeconfirm" spriteset="scalebutton-regular" width="60" height="18" offset="0 0" anchor="1 0" func="tradeconfirm" font="gui/fonts/arial11.fnt" text="Confirm" enabled="false" />
 			</group>
 
 			<!-- Your offer -->
