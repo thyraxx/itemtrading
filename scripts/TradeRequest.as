@@ -10,6 +10,10 @@ namespace itemtrading
 		bool m_usePressed;
 		//KeyNavigationBar@ m_navigationBar;
 
+		AInteractableWidget@ m_widgetTradeAccept;
+		AInteractableWidget@ m_widgetTradeDeny;
+		TextWidget@ m_textWidget;
+
 		int m_inputTickC;
 
 		TradeRequest(GUIBuilder@ b, WindowManager@ windowManager) 
@@ -17,11 +21,13 @@ namespace itemtrading
 			super(b, "gui_itemtrade/traderequest.gui");
 			m_visible = false;
 			@m_manager = windowManager;
+
+			@m_input = WindowInput();
 			//@m_navigationBar = KeyNavigationBar( cast<AWindowObject>(this) );
 
-			@gameInput = GetInput();
-			@menuInput = GetMenuInput();
-			@m_input = WindowInput();
+			@m_widgetTradeAccept = cast<AInteractableWidget>(m_widget.GetWidgetById("tradeaccept"));
+			@m_widgetTradeDeny = cast<AInteractableWidget>(m_widget.GetWidgetById("tradedeny"));
+			@m_textWidget = cast<TextWidget>(m_widget.GetWidgetById("name"));
 
 			RefreshInteractableWidgets(m_widget);
 			OnInteractableIndexChanged();
@@ -34,22 +40,16 @@ namespace itemtrading
 
 		void Update(int dt, PlayerRecord@ record) override
 		{
-			if (m_visible && m_widget !is null)
-				IWidgetHoster::Update(dt);
-			else
-				return;
+			HUDComponent::Update(dt, record);
 
-			//if(gameInput is null)
-			//	@gameInput = GetInput();
-//
-			//if(menuInput is null)
-			//	@menuInput = GetMenuInput();
-//
-			//if(m_input is null)
-			//	@m_input = WindowInput();
+			if(gameInput is null)
+				@gameInput = GetInput();
+
+			if(menuInput is null)
+				@menuInput = GetMenuInput();
 
 			if(gameInput is null || menuInput is null || m_input is null){
-				print("Something is null");
+				print("gameInput, menuinput or m_input is null");
 				return;
 			}
 
@@ -147,37 +147,37 @@ namespace itemtrading
 				return; //;return m_closing;
 
 			// Up
-			//else if (menuInput.Up.Pressed || ((menuInput.Up.Down || giMoveDir.y < 0) && m_inputTickC <= 0))
-			//{
-			//	m_input.m_failC = 0;
-			//	m_input.m_interactableIndex = m_input.OnUp(m_input.m_interactableIndex);
-			//	m_inputTickC = g_inputTick;
-			//	m_input.m_usingMouse = false;
-			//}
-			//// Down
-			//else if (menuInput.Down.Pressed || ((menuInput.Down.Down || giMoveDir.y > 0) && m_inputTickC <= 0))
-			//{
-			//	m_input.m_failC = 0;
-			//	m_input.m_interactableIndex = m_input.OnDown(m_input.m_interactableIndex);
-			//	m_inputTickC = g_inputTick;
-			//	m_input.m_usingMouse = false;
-			//}
-			//// Left
-			//else if (menuInput.Left.Pressed || ((menuInput.Left.Down || giMoveDir.x < 0) && m_inputTickC <= 0))
-			//{
-			//	m_input.m_failC = 0;
-			//	m_input.m_interactableIndex = m_input.OnLeft(m_input.m_interactableIndex);
-			//	m_inputTickC = g_inputTick;
-			//	m_input.m_usingMouse = false;
-			//}
-			//// Right
-			//else if (menuInput.Right.Pressed || ((menuInput.Right.Down || giMoveDir.x > 0) && m_inputTickC <= 0))
-			//{
-			//	m_input.m_failC = 0;
-			//	m_input.m_interactableIndex = m_input.OnRight(m_input.m_interactableIndex);
-			//	m_inputTickC = g_inputTick;
-			//	m_input.m_usingMouse = false;
-			//}
+			else if (menuInput.Up.Pressed || ((menuInput.Up.Down || giMoveDir.y < 0) && m_inputTickC <= 0))
+			{
+				m_input.m_failC = 0;
+				m_input.m_interactableIndex = m_input.OnUp(m_input.m_interactableIndex);
+				m_inputTickC = g_inputTick;
+				m_input.m_usingMouse = false;
+			}
+			// Down
+			else if (menuInput.Down.Pressed || ((menuInput.Down.Down || giMoveDir.y > 0) && m_inputTickC <= 0))
+			{
+				m_input.m_failC = 0;
+				m_input.m_interactableIndex = m_input.OnDown(m_input.m_interactableIndex);
+				m_inputTickC = g_inputTick;
+				m_input.m_usingMouse = false;
+			}
+			// Left
+			else if (menuInput.Left.Pressed || ((menuInput.Left.Down || giMoveDir.x < 0) && m_inputTickC <= 0))
+			{
+				m_input.m_failC = 0;
+				m_input.m_interactableIndex = m_input.OnLeft(m_input.m_interactableIndex);
+				m_inputTickC = g_inputTick;
+				m_input.m_usingMouse = false;
+			}
+			// Right
+			else if (menuInput.Right.Pressed || ((menuInput.Right.Down || giMoveDir.x > 0) && m_inputTickC <= 0))
+			{
+				m_input.m_failC = 0;
+				m_input.m_interactableIndex = m_input.OnRight(m_input.m_interactableIndex);
+				m_inputTickC = g_inputTick;
+				m_input.m_usingMouse = false;
+			}
 
 			// Set new hover
 			if (cachedInteractableIndex.x != m_input.m_interactableIndex.x || cachedInteractableIndex.y != m_input.m_interactableIndex.y)
@@ -196,15 +196,17 @@ namespace itemtrading
 			}
 		}
 
+		// TODO: Not used for anything currently?
 		void OnInteractableIndexChanged()
 		{
 			auto currInteractable = m_input.GetCurrentInteractable();
 			if (currInteractable is null)
 				return;
 
-			print(currInteractable.m_id);
-			array<string>@ rawTexts = currInteractable.NavigationBarText();
-			array<KeyNavigationText@> navTexts;
+			//print(currInteractable.m_id);
+
+			//array<string>@ rawTexts = currInteractable.NavigationBarText();
+			//array<KeyNavigationText@> navTexts;
 			//for (uint i = 0; i < rawTexts.length(); i++)
 			//	navTexts.insertLast(KeyNavigationText(m_navigationBar.m_font.BuildText(rawTexts[i])));
 
@@ -221,16 +223,17 @@ namespace itemtrading
 			auto parse = name.split(" ");
 			if(parse[0] == "accept") {
 				print("trade accepted");
-				(Network::Message("TradeAccept")).SendToPeer( parseInt(parse[1]) );
-				//gm.m_windowManager.AddWindowObject(m_tradeRequest);
-
+				(Network::Message("TradeRequestAccept")).SendToPeer( parseInt(parse[1]) );
+				m_manager.AddWindowObject(m_tradingWindow);
 			}
 
 			if(parse[0] == "deny") {
 				print("trade denied");
-				//gm.m_windowManager.CloseWindow(m_tradeRequest);
-				(Network::Message("TradeDeny")).SendToPeer( parseInt(parse[1]) );
+				m_tradeStatus.Reset();
+				(Network::Message("TradeRequestDeny")).SendToPeer( parseInt(parse[1]) );
 			}
+
+			m_visible = false;
 		}
 	}
 }
