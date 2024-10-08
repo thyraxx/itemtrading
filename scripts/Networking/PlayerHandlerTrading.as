@@ -49,15 +49,12 @@ namespace itemtrading
 		m_tradeStatus.setTradePeers(starterPeer, receiverPeer);
 		(Network::Message("SyncTradeStatus") << starterPeer << receiverPeer).SendToPeer(starterPeer);
 
-		auto gm = cast<BaseGameMode>(g_gameMode);
-		if(gm !is null) {
-			// this GUI is shown on the receivers side, so it must contain the starter peer
-			// to know to which peer the reply must return to
-			m_tradeRequest.m_widgetTradeAccept.m_func = "accept " + starterPeer;
-			m_tradeRequest.m_widgetTradeDeny.m_func = "deny " + starterPeer;
-			m_tradeRequest.m_textWidget.SetText(Lobby::GetPlayerName(starterPeer) + " wants to trade");
-			m_tradeRequest.m_visible = true;
-		}
+		// this GUI is shown on the receivers side, so it must contain the starter peer
+		// to know to which peer the reply must return to
+		m_tradeRequest.m_widgetTradeAccept.m_func = "accept " + starterPeer;
+		m_tradeRequest.m_widgetTradeDeny.m_func = "deny " + starterPeer;
+		m_tradeRequest.m_textWidget.SetText(Lobby::GetPlayerName(starterPeer) + " wants to trade");
+		m_tradeRequest.m_visible = true;
 	}
 
 	// Starter side receives reply
