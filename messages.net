@@ -6,20 +6,43 @@
 	ReliableOrdered
 -->
 <network>
-	<message name="SyncAddItem" namespace="PlayerHandlerTrading" delivery="ReliableOrdered">
+	<message name="SyncAddItem" namespace="itemtrading" delivery="ReliableOrdered">
 		<svalue /> <!-- Equipment Item -->
 	</message>
 
-	<message name="SyncRemoveItem" namespace="PlayerHandlerTrading" delivery="ReliableOrdered">
+	<message name="SyncRemoveItem" namespace="itemtrading" delivery="ReliableOrdered">
 		<svalue /> <!-- Equipment Item -->
 	</message>
 
-	<message name="SendTradeRequestToPeer" namespace="PlayerHandlerTrading" delivery="ReliableOrdered">
-		<int /> <!-- Peer -->
+	<message name="SendTradeRequest" namespace="itemtrading" delivery="ReliableOrdered">
+		<int /> <!-- starterPeer peer -->
+		<int /> <!-- receiverPeer peer -->
+	</message>
+	<message name="TradeAccept" namespace="itemtrading" delivery="ReliableOrdered">
+		<int /> <!-- peer -->
 	</message>
 
-	<message name="CancelTrade" namespace="PlayerHandlerTrading" delivery="ReliableOrdered">
-		<int /> <!-- Peer -->
+	<message name="TradeDeny" namespace="itemtrading" delivery="ReliableOrdered">
+		<int /> <!-- peer -->
 	</message>
+
+	<message name="SyncTradeStatus" namespace="itemtrading" delivery="ReliableOrdered">
+		<int /> <!-- starter peer -->
+		<int /> <!-- receiver peer -->
+	</message>
+
+	<message name="IsTradeLocked" namespace="itemtrading" delivery="ReliableOrdered">
+		<bool /> <!-- isLocked -->
+	</message>
+
+	<message name="CancelTrade" namespace="itemtrading" delivery="ReliableOrdered" />
+
+	<message name="TradeRequestAccept" namespace="itemtrading" delivery="ReliableOrdered" />
+	<message name="TradeRequestDeny" namespace="itemtrading" delivery="ReliableOrdered" />
+	<message name="SyncOfferPeer" namespace="itemtrading" delivery="ReliableOrdered" />
+	<message name="CheckConfirm" namespace="itemtrading" delivery="ReliableOrdered" />
+	<message name="AcceptItems" namespace="itemtrading" delivery="ReliableOrdered" />
+
+
 
 </network>
