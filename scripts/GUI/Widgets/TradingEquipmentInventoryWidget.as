@@ -38,15 +38,13 @@ class TradingEquipmentInventoryWidget : EquipmentInventoryWidget
 				SValueBuilder builder;
 				Item::SaveItem(builder, item);
 
-				// Peer hardcoded temporarily
-				if(GetLocalPlayerRecord().peer == 0)
-					(Network::Message("SyncAddItem") << builder.Build()).SendToPeer(1);
+				if(GetLocalPlayerRecord().peer == m_tradeStatus.starterPeer)
+					(Network::Message("SyncAddItem") << builder.Build()).SendToPeer(m_tradeStatus.receiverPeer);
 				else
-					(Network::Message("SyncAddItem") << builder.Build()).SendToHost();
-				
+					(Network::Message("SyncAddItem") << builder.Build()).SendToPeer(m_tradeStatus.starterPeer);
+
 				Refresh();
 			}
-
 		}
 
 		m_host.OnFunc(this, "refresh");
