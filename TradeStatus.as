@@ -26,6 +26,5 @@ class TradeStatus
 		m_tradeConfirm = false;
 		m_tradeLock = false;
 		m_tradeCanceled = false;
-		m_tradingWindow.m_buttonConfirmWidget.m_enabled = false;
 	}
 }

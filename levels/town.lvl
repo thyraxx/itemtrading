@@ -1,10 +1,10 @@
 <dict>
 	<dict name="game-mode">
-		<string name="Class">TestGameMode</string>
+		<string name="Class">TownGameMode</string>
 	</dict>
 	<int name="version">1</int>
 	<dict name="lighting">
-		<string name="environment">effects/env/_day.env</string>
+		<string name="environment">effects/env/town.env</string>
 	</dict>
 	<array name="tiles">
 		<dict>
