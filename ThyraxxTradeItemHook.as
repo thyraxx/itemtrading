@@ -17,7 +17,7 @@ namespace itemtrading
 		@equipInventoryCounterOffer = EquipmentInventory(GetLocalPlayerRecord());
 		equipInventoryCounterOffer.m_maxItems = 9;
 
-		@m_tradePlayerList = TradePlayerListWindow(aGameplayGameMode.m_guiBuilder);
+		//@m_tradePlayerList = TradePlayerListWindow(@aGameplayGameMode.m_guiBuilder);
 		@m_tradingWindow = TradingWindow(aGameplayGameMode.m_guiBuilder);
 
 		print("isServer: " + Network::IsServer());
@@ -26,7 +26,12 @@ namespace itemtrading
 	[Hook]
 	void PickedCharacter(PlayerRecord@ record)
 	{
-		m_equipmentTradingInventoryWidget.SetOwner(record);
+		auto plyCharTab = cast<PlayerMenu>(GetOpenWindowTrade(cast<BaseGameMode>(g_gameMode)));
+		if(plyCharTab !is null) {
+			auto tab = plyCharTab.m_tabSystem.m_tabs[0];
+			m_equipmentTradingInventoryWidget = cast<TradingEquipmentInventoryWidget@>(tab.m_widget.GetWidgetById("equipment-inventory"));
+			m_equipmentTradingInventoryWidget.SetOwner(record);
+		}
 	}
 
 	[Hook]
@@ -39,10 +44,11 @@ namespace itemtrading
 		// Showing how many Window objects there are, if 0 you don't have any UI windows open like Character sheet or guild hall
 		//print("m_objects.length(): " + baseGameMode.m_windowManager.m_objects.length());
 		
+		print("" + baseGameMode.m_windowManager.m_objects.length());
 		if(baseGameMode.m_windowManager.GetCurrentWindow() is null)
-			baseGameMode.m_windowManager.AddWindowObject(m_tradePlayerList);
+			baseGameMode.m_windowManager.AddWindowObject(@m_tradePlayerList = TradePlayerListWindow(baseGameMode.m_guiBuilder));
 		else
-			baseGameMode.m_windowManager.CloseWindow(m_tradePlayerList);
+			baseGameMode.m_windowManager.CloseWindow(@m_tradePlayerList);
 	}
 
 	[Hook]
@@ -52,7 +58,7 @@ namespace itemtrading
 
 	[Hook]
 	void HUDConstructor(HUD@ hud, GUIBuilder@ guiBuilder) {
-		hud.m_components.insertLast(@m_tradeRequest = TradeRequest(guiBuilder, cast<BaseGameMode>(g_gameMode).m_windowManager));
+		hud.m_components.insertLast(@m_tradeRequest = TradeRequest(guiBuilder, cast<BaseGameMode@>(g_gameMode).m_windowManager));
 	}
 
 	[Hook]
@@ -61,6 +67,10 @@ namespace itemtrading
 		builder.AddWidgetProducer("tradingequipmentinventory", LoadTradingEquipmentInventoryWidget);
 		builder.AddWidgetProducer("tradingequipmentinventoryoffer", LoadTradingEquipmentInventoryOfferWidget);
 		builder.AddWidgetProducer("tradingequipmentinventorycounteroffer", LoadTradingEquipmentInventoryCounterOfferWidget);
+	}
+
+	AWindowObject@ GetOpenWindowTrade(BaseGameMode@ baseGameMode){
+		return baseGameMode.m_windowManager.GetCurrentWindow();
 	}
 
 }
